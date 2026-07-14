@@ -4,6 +4,7 @@ namespace INFASS_BAS.Controllers
 {
     public class LoginController : Controller
     {
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -14,7 +15,7 @@ namespace INFASS_BAS.Controllers
             // Add your authentication logic here
             if (username == "admin" && password == "password")
             {
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index", "Home");
             }
 
             // Return view with error if authentication fails
