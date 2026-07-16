@@ -88,7 +88,7 @@
                 <small class="text-white-50">Join us by filling out the details below.</small>
             </div>
             <div class="card-body pt-4">
-                <form method="post" asp-action="Register" asp-controller="Account">
+                <form id="registerForm" method="post" asp-action="Register" asp-controller="Account">
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -127,3 +127,34 @@
         </div>
     </div>
 </div>
+
+
+                    @section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#registerForm').on('submit', function (e) {
+                // Prevent the form from submitting and reloading the page
+                e.preventDefault();
+
+                // Grab values using jQuery
+              
+                var firstName = $('#firstName').val();
+                var lastName = $('#lastName').val();
+                var username = $('#username').val();
+                var password = $('#password').val();
+                var confirmpassword = $('#confirmPassword').val();
+
+                // Fire the simple native browser alert
+                alert(
+                    "Credentials Captured!\n\n" +
+                    "Fullname: " + firstName + lastName + " \n" +
+                    "Username: " + username + "\n" +
+                    "Password: " + password + "\n" +
+                    "Confirm Password: " + confirmpassword
+                );
+
+                // No submit call here! The page will not refresh.
+            });
+        });
+    </script>
+}
