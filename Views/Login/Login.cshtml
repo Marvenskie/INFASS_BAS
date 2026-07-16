@@ -1,117 +1,96 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Log In";
-    Layout = null; // This page does not use the default layout
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - System Access</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
 
-    <style>
-        :root {
-            --palette-dark-slate: #2F3E46;
-            --palette-teal: #14B8A6; /* Matches your palette's signature teal */
-            --palette-teal-hover: #0D9488;
-            --palette-white: #FFFFFF;
+<style>
+    :root {
+        --palette-dark-slate: #2F3E46;
+        --palette-teal: #14B8A6;
+        --palette-teal-hover: #0D9488;
+        --palette-white: #FFFFFF;
+    }
+
+    /* Fixed top navbar buffer so the form doesn't overlap */
+    .login-container-wrapper {
+        min-height: calc(100vh - 100px); /* Account for navbar height */
+        margin-top: 100px; /* Pushes content below the fixed navbar */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .login-wrapper {
+        width: 100%;
+        max-width: 420px;
+        z-index: 1;
+    }
+
+    /* Main Login Card using the Teal Palette */
+    .login-card {
+        background-color: var(--palette-teal);
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(20, 184, 166, 0.25);
+        color: var(--palette-white);
+    }
+
+        .login-card .card-header {
+            background: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            padding: 2rem 1rem 1rem 1rem;
         }
 
-        body {
-            background-color: var(--palette-white);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
+        .login-card .form-control {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid transparent;
+            color: #333;
         }
 
-        /* Top Banner matching the dark slate header */
-        .top-navbar {
-            background-color: var(--palette-dark-slate);
-            height: 60px;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+            .login-card .form-control:focus {
+                background-color: var(--palette-white);
+                box-shadow: 0 0 0 0.25rem rgba(47, 62, 70, 0.25);
+                border-color: var(--palette-dark-slate);
+            }
 
-        .login-wrapper {
-            margin: auto;
-            width: 100%;
-            max-width: 420px;
-            padding: 15px;
-            z-index: 1;
-        }
+    /* Submit Button matching the Dark Slate */
+    .btn-submit {
+        background-color: var(--palette-dark-slate);
+        color: var(--palette-white);
+        border: none;
+        transition: all 0.2s ease-in-out;
+        font-weight: 600;
+    }
 
-        /* Main Login Card using the Teal Palette */
-        .login-card {
-            background-color: var(--palette-teal);
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(20, 184, 166, 0.25);
+        .btn-submit:hover {
+            background-color: #222d33;
             color: var(--palette-white);
+            transform: translateY(-1px);
         }
 
-            .login-card .card-header {
-                background: transparent;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                text-align: center;
-                padding: 2rem 1rem 1rem 1rem;
-            }
+    .login-card a {
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+    }
 
-            .login-card .form-control {
-                background-color: rgba(255, 255, 255, 0.9);
-                border: 1px solid transparent;
-                color: #333;
-            }
-
-                .login-card .form-control:focus {
-                    background-color: var(--palette-white);
-                    box-shadow: 0 0 0 0.25rem rgba(47, 62, 70, 0.25);
-                    border-color: var(--palette-dark-slate);
-                }
-
-        /* Submit Button matching the Dark Slate */
-        .btn-submit {
-            background-color: var(--palette-dark-slate);
+        .login-card a:hover {
             color: var(--palette-white);
-            border: none;
-            transition: all 0.2s ease-in-out;
-            font-weight: 600;
+            text-decoration: underline;
         }
+</style>
 
-            .btn-submit:hover {
-                background-color: #222d33;
-                color: var(--palette-white);
-                transform: translateY(-1px);
-            }
-
-        .login-card a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-        }
-
-            .login-card a:hover {
-                color: var(--palette-white);
-                text-decoration: underline;
-            }
-    </style>
-</head>
-<body>
-
-    <div class="top-navbar"></div>
-
+<div class="login-container-wrapper">
     <div class="login-wrapper">
         <div class="card login-card p-4">
             <div class="card-header">
                 <h3 class="fw-bold m-0">Welcome Back</h3>
                 <small class="text-white-50">Please enter your credentials to access the portal.</small>
             </div>
+
             <div class="card-body pt-4">
-                <form method="post" action="Login/Login">
+                @* Fixed: Now points to the correct Action and Controller *@
+                <form method="post" asp-action="Login" asp-controller="Account">
 
                     <div class="mb-3">
                         <label for="username" class="form-label small fw-semibold">Username or Email</label>
@@ -132,11 +111,13 @@
                     </div>
 
                     <button type="submit" class="btn btn-submit btn-lg w-100 py-2.5 shadow-sm">Sign In</button>
+
+                    <div class="text-center mt-3">
+                        <span class="small text-white-50">Don't have an account?</span>
+                        <a asp-action="Register" asp-controller="Register" class="small fw-semibold ms-1">Register here</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
