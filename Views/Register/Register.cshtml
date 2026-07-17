@@ -88,7 +88,7 @@
                 <small class="text-white-50">Join us by filling out the details below.</small>
             </div>
             <div class="card-body pt-4">
-                <form id="registerForm" method="post" asp-action="Register" asp-controller="Account">
+                <form method="post" asp-action="Register" asp-controller="Account">
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -102,8 +102,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="email" class="form-label small fw-semibold">Email Address</label>
-                        <input type="email" class="form-control" id="email" name="Email" placeholder="name@example.com" required />
+                        <label for="email" class="form-label small fw-semibold">Username</label>
+                        <input type="email" class="form-control" id="username" name="Email" placeholder="name@example.com" required />
                     </div>
 
                     <div class="mb-3">
@@ -116,7 +116,7 @@
                         <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Repeat password" required />
                     </div>
 
-                    <button type="submit" class="btn btn-submit btn-lg w-100 py-2.5 shadow-sm mb-3">Register</button>
+                    <button id="register" type="submit" class="btn btn-submit btn-lg w-100 py-2.5 shadow-sm mb-3">Register</button>
 
                     <div class="text-center">
                         <span class="small text-white-50">Already have an account?</span>
@@ -128,33 +128,38 @@
     </div>
 </div>
 
+@section Scripts {
 
-                    @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         $(document).ready(function () {
-            $('#registerForm').on('submit', function (e) {
-                // Prevent the form from submitting and reloading the page
-                e.preventDefault();
 
-                // Grab values using jQuery
-              
-                var firstName = $('#firstName').val();
-                var lastName = $('#lastName').val();
-                var username = $('#username').val();
-                var password = $('#password').val();
-                var confirmpassword = $('#confirmPassword').val();
+        $('#register').click(function (e) {
+        e.preventDefault();
 
-                // Fire the simple native browser alert
-                alert(
-                    "Credentials Captured!\n\n" +
-                    "Fullname: " + firstName + lastName + " \n" +
-                    "Username: " + username + "\n" +
-                    "Password: " + password + "\n" +
-                    "Confirm Password: " + confirmpassword
-                );
+        var formData = {
+        FirstName: $('#firstName').val(),
+        LastName: $('#lastName').val(),
+        Username: $('#username').val(),
+        Password: $('#password').val(),
+        ConfirmPassword: $('#confirmPassword').val()
+        };
 
-                // No submit call here! The page will not refresh.
-            });
+        $.ajax({
+        url: '/Register/SubmitRegistration',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(formData),
+        success: function (response) {
+
+        alert(response);
+        },
+        error: function (xhr, status, error) {
+        alert("An error occurred: " + xhr.responseText);
+        }
+        });
+        });
         });
     </script>
 }
