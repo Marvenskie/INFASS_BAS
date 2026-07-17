@@ -1,41 +1,28 @@
-﻿using INFASS_BAS.Models;
-using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace INFASS_BAS.Controllers
 {
     public class RegisterController : Controller
     {
-		User user = new User();
-
-		[HttpGet]
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-		[HttpPost]
-		public IActionResult SubmitRegistration([FromBody] User userData)
-		{
-			if (userData == null)
-			{
-				return BadRequest("No data received.");
-			}
+        [HttpPost]
+        public IActionResult Register(string firstName, string lastName, string email, string password, string confirmPassword)
+        {
+            if (password != confirmPassword)
+            {
+                ModelState.AddModelError(string.Empty, "Passwords do not match.");
+                return View();
+            }
 
-			System.Diagnostics.Debug.WriteLine("================ USER SIGN UP DATA ================");
-			System.Diagnostics.Debug.WriteLine($"Fullname:  {userData.FirstName} {userData.LastName}");
-			System.Diagnostics.Debug.WriteLine($"Username:  {userData.Username}");
-			System.Diagnostics.Debug.WriteLine($"Password:  {userData.Password}");
-			System.Diagnostics.Debug.WriteLine("===================================================");
+            // Add your database saving / registration logic here (e.g., ASP.NET Core Identity)
 
-			string message = $"Successfully received registration for: \n" +
-				$"\n" +
-				$"Fullname: {userData.FirstName} {userData.LastName} \n" +
-				$"Username: {userData.Username} \n" +
-				$"Password: {userData.Password} \n" +
-				$"Confirm Password: {userData.ConfirmPassword}";
-
-			return Json(message);
-		}
-	}
+            // Redirect to login page upon successful signup
+            return RedirectToAction("Login", "Account");
+        }
+    }
 }
