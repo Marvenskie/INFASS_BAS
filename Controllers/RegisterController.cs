@@ -24,14 +24,14 @@ namespace INFASS_BAS.Controllers
 
 			System.Diagnostics.Debug.WriteLine("================ USER SIGN UP DATA ================");
 			System.Diagnostics.Debug.WriteLine($"Fullname:  {userData.FirstName} {userData.LastName}");
-			System.Diagnostics.Debug.WriteLine($"Username:  {userData.Email}");
+			System.Diagnostics.Debug.WriteLine($"Email:     {userData.Email}");
 			System.Diagnostics.Debug.WriteLine($"Password:  {userData.Password}");
 			System.Diagnostics.Debug.WriteLine("===================================================");
 
 			string message = $"Successfully received registration for: \n" +
 				$"\n" +
 				$"Fullname: {userData.FirstName} {userData.LastName} \n" +
-				$"Username: {userData.Email} \n" +
+				$"Email: {userData.Email} \n" +
 				$"Password: {userData.Password} \n" +
 				$"Confirm Password: {userData.ConfirmPassword}";
 
